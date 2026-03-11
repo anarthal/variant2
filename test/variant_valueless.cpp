@@ -18,7 +18,9 @@
 #include <boost/config/std/stdexcept.hpp>
 
 using namespace boost::variant2;
+#ifndef BOOST_USE_MODULES
 namespace v2d = boost::variant2::detail;
+#endif
 
 #define STATIC_ASSERT(...) static_assert(__VA_ARGS__, #__VA_ARGS__)
 
@@ -39,7 +41,9 @@ STATIC_ASSERT( std::is_nothrow_default_constructible<X1>::value );
 STATIC_ASSERT( std::is_nothrow_copy_constructible<X1>::value );
 STATIC_ASSERT( std::is_nothrow_move_constructible<X1>::value );
 STATIC_ASSERT( std::is_trivially_destructible<X1>::value );
+#ifndef BOOST_USE_MODULES
 STATIC_ASSERT( v2d::is_trivially_move_assignable<X1>::value );
+#endif
 STATIC_ASSERT( std::is_nothrow_constructible<X1, E1>::value );
 STATIC_ASSERT( !std::is_nothrow_constructible<X1, E1x>::value );
 

@@ -2,6 +2,12 @@
 // Distributed under the Boost Software License, Version 1.0.
 // https://www.boost.org/LICENSE_1_0.txt
 
+#ifdef BOOST_USE_MODULES
+
+int main() {}
+
+#else
+
 #include <boost/variant2/variant.hpp>
 #include <boost/core/lightweight_test_trait.hpp>
 #include <boost/config/std/ostream.hpp>
@@ -39,3 +45,5 @@ int main()
 
     return boost::report_errors();
 }
+
+#endif

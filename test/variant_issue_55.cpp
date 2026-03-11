@@ -14,6 +14,13 @@
 // the variant's discriminator guarantees only initialized alternatives are
 // accessed.
 
+#ifdef BOOST_USE_MODULES
+
+// TODO: re-enable after Boost.System modularization
+int main() {}
+
+#else
+
 #include <boost/system/result.hpp>
 #include <boost/core/lightweight_test.hpp>
 #include <boost/config.hpp>
@@ -192,3 +199,5 @@ int main()
 
     return boost::report_errors();
 }
+
+#endif

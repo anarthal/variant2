@@ -7,10 +7,10 @@
 # pragma warning( disable: 4244 ) // conversion from int to float, possible loss of data
 #endif
 
+#include <boost/container_hash/hash.hpp>
 #include <boost/variant2/variant.hpp>
 #include <boost/core/lightweight_test.hpp>
 #include <boost/core/lightweight_test_trait.hpp>
-#include <boost/container_hash/hash.hpp>
 #include <boost/config/workaround.hpp>
 #include <boost/config/std/vector.hpp>
 
@@ -76,7 +76,7 @@ int main()
     test2<boost::hash, int>();
     test2<boost::hash, float>();
 
-#if !BOOST_WORKAROUND(BOOST_MSVC, < 1910) && ( !defined(_LIBCPP_STD_VER) || _LIBCPP_STD_VER > 11 )
+#if !BOOST_WORKAROUND(BOOST_MSVC, < 1910) && ( !defined(_LIBCPP_STD_VER) || _LIBCPP_STD_VER > 11 ) && !defined(BOOST_USE_MODULES)
 
     BOOST_TEST_TRAIT_FALSE(( detail::is_hash_enabled<Y> ));
 

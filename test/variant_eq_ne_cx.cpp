@@ -12,7 +12,8 @@
 BOOST_PRAGMA_MESSAGE( "Test skipped because BOOST_NO_CXX14_CONSTEXPR is defined" )
 int main() {}
 
-#elif !defined(BOOST_MP11_HAS_CXX14_CONSTEXPR)
+// BOOST_MP11_HAS_CXX14_CONSTEXPR is an mp11 implementation detail
+#elif !defined(BOOST_MP11_HAS_CXX14_CONSTEXPR) && !defined(BOOST_USE_MODULES)
 
 BOOST_PRAGMA_MESSAGE("Skipping constexpr op==, op!= test because BOOST_MP11_HAS_CXX14_CONSTEXPR is not defined")
 int main() {}

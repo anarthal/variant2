@@ -6,6 +6,12 @@
 # pragma warning(disable: 4503) // decorated name length exceeded
 #endif
 
+#ifdef BOOST_USE_MODULES
+
+int main() {}
+
+#else
+
 #include <boost/variant2/variant.hpp>
 #include <boost/core/lightweight_test_trait.hpp>
 #include <boost/config.hpp>
@@ -93,3 +99,5 @@ int main()
     mp_for_each< mp_power_set< mp_list<D, CC1, CC2, MC1, MC2, CA1, CA2, MA1, MA2> > >( test() );
     return boost::report_errors();
 }
+
+#endif

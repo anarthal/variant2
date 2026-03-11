@@ -6,6 +6,8 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 
+#include <boost/config.hpp>
+#include <boost/config/workaround.hpp>
 #include <boost/variant2/variant.hpp>
 #include <boost/core/lightweight_test.hpp>
 #include <boost/core/lightweight_test_trait.hpp>

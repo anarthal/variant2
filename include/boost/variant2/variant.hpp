@@ -54,14 +54,20 @@ import boost.variant2;
 
 namespace boost
 {
-
+    
 #ifdef BOOST_NO_EXCEPTIONS
 
+// Avoid module attachment
+extern "C++" {
 BOOST_NORETURN void throw_exception( std::exception const & e ); // user defined
+}
 
 #endif
 
+// Avoid module attachment
+extern "C++" {
 template<class T> struct hash;
+}
 
 namespace variant2
 {
