@@ -4,8 +4,8 @@
 
 #include <boost/variant2/variant.hpp>
 #include <boost/core/lightweight_test_trait.hpp>
-#include <ostream>
-#include <string>
+#include <boost/config/std/ostream.hpp>
+#include <boost/config/std/string.hpp>
 
 struct X
 {

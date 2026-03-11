@@ -12,10 +12,10 @@
 
 #include <boost/variant2/variant.hpp>
 #include <boost/core/lightweight_test.hpp>
-#include <type_traits>
-#include <utility>
-#include <string>
-#include <stdexcept>
+#include <boost/config/std/type_traits.hpp>
+#include <boost/config/std/utility.hpp>
+#include <boost/config/std/string.hpp>
+#include <boost/config/std/stdexcept.hpp>
 
 using namespace boost::variant2;
 namespace v2d = boost::variant2::detail;

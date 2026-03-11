@@ -5,7 +5,7 @@
 #include <boost/variant2/variant.hpp>
 #include <boost/config.hpp>
 #include <boost/config/pragma_message.hpp>
-#include <utility>
+#include <boost/config/std/utility.hpp>
 
 #if defined(BOOST_NO_CXX14_CONSTEXPR)
 

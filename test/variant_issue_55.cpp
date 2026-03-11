@@ -17,18 +17,18 @@
 #include <boost/system/result.hpp>
 #include <boost/core/lightweight_test.hpp>
 #include <boost/config.hpp>
-#include <exception>
-#include <string>
+#include <boost/config/std/exception.hpp>
+#include <boost/config/std/string.hpp>
 
 // Check for C++17 std::optional support
 #if BOOST_CXX_VERSION >= 201703L
-# include <optional>
+# include <boost/config/std/optional.hpp>
 # define BOOST_VARIANT2_TEST_HAS_OPTIONAL 1
 #endif
 
 // Check for C++20 coroutine support
 #if defined(__cpp_impl_coroutine) && __cpp_impl_coroutine >= 201902L
-# include <coroutine>
+# include <boost/config/std/coroutine.hpp>
 # define BOOST_VARIANT2_TEST_HAS_CORO 1
 #endif
 

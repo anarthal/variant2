@@ -15,10 +15,10 @@
 #include <boost/core/lightweight_test.hpp>
 #include <boost/core/lightweight_test_trait.hpp>
 #include <boost/config.hpp>
-#include <type_traits>
-#include <utility>
-#include <string>
-#include <cstdio>
+#include <boost/config/std/type_traits.hpp>
+#include <boost/config/std/utility.hpp>
+#include <boost/config/std/string.hpp>
+#include <boost/config/std/cstdio.hpp>
 
 using namespace boost::variant2;
 using boost::mp11::mp_size_t;

@@ -11,9 +11,9 @@
 #include <boost/core/lightweight_test_trait.hpp>
 #include <boost/config.hpp>
 #include <boost/config/workaround.hpp>
-#include <type_traits>
-#include <utility>
-#include <string>
+#include <boost/config/std/type_traits.hpp>
+#include <boost/config/std/utility.hpp>
+#include <boost/config/std/string.hpp>
 
 using namespace boost::variant2;
 

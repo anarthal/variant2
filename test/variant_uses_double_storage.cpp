@@ -3,7 +3,7 @@
 // https://www.boost.org/LICENSE_1_0.txt
 
 #include <boost/variant2/variant.hpp>
-#include <type_traits>
+#include <boost/config/std/type_traits.hpp>
 
 using namespace boost::variant2;
 

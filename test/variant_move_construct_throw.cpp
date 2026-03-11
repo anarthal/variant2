@@ -12,7 +12,7 @@
 
 #include <boost/variant2/variant.hpp>
 #include <boost/core/lightweight_test.hpp>
-#include <stdexcept>
+#include <boost/config/std/stdexcept.hpp>
 
 using namespace boost::variant2;
 

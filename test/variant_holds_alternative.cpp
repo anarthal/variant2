@@ -4,7 +4,7 @@
 
 #include <boost/variant2/variant.hpp>
 #include <boost/core/lightweight_test.hpp>
-#include <string>
+#include <boost/config/std/string.hpp>
 
 using namespace boost::variant2;
 

@@ -12,7 +12,7 @@
 #include <boost/json/value_from.hpp>
 #include <boost/json/serialize.hpp>
 #include <boost/core/lightweight_test.hpp>
-#include <string>
+#include <boost/config/std/string.hpp>
 
 using namespace boost::variant2;
 namespace json = boost::json;

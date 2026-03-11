@@ -15,15 +15,15 @@
 #include <boost/assert/source_location.hpp>
 #include <boost/config.hpp>
 #include <boost/config/workaround.hpp>
-#include <cstddef>
-#include <type_traits>
-#include <exception>
-#include <utility>
-#include <typeindex> // std::hash
-#include <iosfwd>
-#include <cstdint>
-#include <cerrno>
-#include <limits>
+#include <boost/config/std/cstddef.hpp>
+#include <boost/config/std/type_traits.hpp>
+#include <boost/config/std/exception.hpp>
+#include <boost/config/std/utility.hpp>
+#include <boost/config/std/typeindex.hpp> // std::hash
+#include <boost/config/std/iosfwd.hpp>
+#include <boost/config/std/cstdint.hpp>
+#include <boost/config/std/cerrno.hpp>
+#include <boost/config/std/limits.hpp>
 
 //
 

@@ -4,8 +4,8 @@
 
 #include <boost/variant2/variant.hpp>
 #include <boost/core/lightweight_test.hpp>
-#include <sstream>
-#include <string>
+#include <boost/config/std/sstream.hpp>
+#include <boost/config/std/string.hpp>
 
 using namespace boost::variant2;
 

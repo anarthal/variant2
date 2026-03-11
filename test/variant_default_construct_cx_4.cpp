@@ -4,7 +4,7 @@
 
 #include <boost/variant2/variant.hpp>
 #include <boost/config/pragma_message.hpp>
-#include <string>
+#include <boost/config/std/string.hpp>
 
 #if !defined(__cpp_constexpr_dynamic_alloc) || __cpp_constexpr_dynamic_alloc < 201907L
 

@@ -10,7 +10,7 @@
 #include <boost/core/lightweight_test.hpp>
 #include <boost/config.hpp>
 #include <boost/config/workaround.hpp>
-#include <utility>
+#include <boost/config/std/utility.hpp>
 
 struct X: boost::variant2::variant<int, float>
 {

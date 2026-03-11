@@ -12,7 +12,7 @@
 #include <boost/core/lightweight_test_trait.hpp>
 #include <boost/container_hash/hash.hpp>
 #include <boost/config/workaround.hpp>
-#include <vector>
+#include <boost/config/std/vector.hpp>
 
 using namespace boost::variant2;
 
