@@ -5,6 +5,14 @@
 // Distributed under the Boost Software License, Version 1.0.
 // https://www.boost.org/LICENSE_1_0.txt
 
+#if defined(BOOST_USE_MODULES) && !defined(BOOST_VARIANT2_INTERFACE_UNIT)
+
+#ifndef BOOST_IN_MODULE_PURVIEW
+import boost.variant2;
+#endif
+
+#else
+
 #if defined(_MSC_VER) && _MSC_VER < 1910
 # pragma warning( push )
 # pragma warning( disable: 4521 4522 ) // multiple copy operators
@@ -24,6 +32,14 @@
 #include <boost/config/std/cstdint.hpp>
 #include <boost/config/std/cerrno.hpp>
 #include <boost/config/std/limits.hpp>
+
+//
+
+#ifdef BOOST_USE_MODULES
+#  define BOOST_VARIANT2_MODULE_EXPORT export
+#else
+#  define BOOST_VARIANT2_MODULE_EXPORT
+#endif
 
 //
 
@@ -52,15 +68,15 @@ namespace variant2
 
 // bad_variant_access
 
-class bad_variant_access: public std::exception
+BOOST_VARIANT2_MODULE_EXPORT class bad_variant_access: public std::exception
 {
 public:
 
-    bad_variant_access() noexcept
+    inline bad_variant_access() noexcept
     {
     }
 
-    char const * what() const noexcept
+    inline char const * what() const noexcept
     {
         return "bad_variant_access";
     }
@@ -86,37 +102,37 @@ BOOST_NORETURN inline void throw_bad_variant_access()
 
 // monostate
 
-struct monostate
+BOOST_VARIANT2_MODULE_EXPORT struct monostate
 {
 };
 
 #if !BOOST_WORKAROUND(BOOST_MSVC, < 1960)
 
-constexpr bool operator<(monostate, monostate) noexcept { return false; }
-constexpr bool operator>(monostate, monostate) noexcept { return false; }
-constexpr bool operator<=(monostate, monostate) noexcept { return true; }
-constexpr bool operator>=(monostate, monostate) noexcept { return true; }
-constexpr bool operator==(monostate, monostate) noexcept { return true; }
-constexpr bool operator!=(monostate, monostate) noexcept { return false; }
+BOOST_VARIANT2_MODULE_EXPORT constexpr bool operator<(monostate, monostate) noexcept { return false; }
+BOOST_VARIANT2_MODULE_EXPORT constexpr bool operator>(monostate, monostate) noexcept { return false; }
+BOOST_VARIANT2_MODULE_EXPORT constexpr bool operator<=(monostate, monostate) noexcept { return true; }
+BOOST_VARIANT2_MODULE_EXPORT constexpr bool operator>=(monostate, monostate) noexcept { return true; }
+BOOST_VARIANT2_MODULE_EXPORT constexpr bool operator==(monostate, monostate) noexcept { return true; }
+BOOST_VARIANT2_MODULE_EXPORT constexpr bool operator!=(monostate, monostate) noexcept { return false; }
 
 #else
 
-constexpr bool operator<(monostate const&, monostate const&) noexcept { return false; }
-constexpr bool operator>(monostate const&, monostate const&) noexcept { return false; }
-constexpr bool operator<=(monostate const&, monostate const&) noexcept { return true; }
-constexpr bool operator>=(monostate const&, monostate const&) noexcept { return true; }
-constexpr bool operator==(monostate const&, monostate const&) noexcept { return true; }
-constexpr bool operator!=(monostate const&, monostate const&) noexcept { return false; }
+BOOST_VARIANT2_MODULE_EXPORT constexpr bool operator<(monostate const&, monostate const&) noexcept { return false; }
+BOOST_VARIANT2_MODULE_EXPORT constexpr bool operator>(monostate const&, monostate const&) noexcept { return false; }
+BOOST_VARIANT2_MODULE_EXPORT constexpr bool operator<=(monostate const&, monostate const&) noexcept { return true; }
+BOOST_VARIANT2_MODULE_EXPORT constexpr bool operator>=(monostate const&, monostate const&) noexcept { return true; }
+BOOST_VARIANT2_MODULE_EXPORT constexpr bool operator==(monostate const&, monostate const&) noexcept { return true; }
+BOOST_VARIANT2_MODULE_EXPORT constexpr bool operator!=(monostate const&, monostate const&) noexcept { return false; }
 
 #endif
 
 // variant forward declaration
 
-template<class... T> class variant;
+BOOST_VARIANT2_MODULE_EXPORT template<class... T> class variant;
 
 // variant_size
 
-template<class T> struct variant_size
+BOOST_VARIANT2_MODULE_EXPORT template<class T> struct variant_size
 {
 };
 
@@ -142,7 +158,7 @@ template<class T> struct variant_size<T&&>: variant_size<T>
 
 #if !defined(BOOST_NO_CXX14_VARIABLE_TEMPLATES)
 
-template <class T> /*inline*/ constexpr std::size_t variant_size_v = variant_size<T>::value;
+BOOST_VARIANT2_MODULE_EXPORT template <class T> /*inline*/ constexpr std::size_t variant_size_v = variant_size<T>::value;
 
 #endif
 
@@ -152,9 +168,9 @@ template <class... T> struct variant_size<variant<T...>>: mp11::mp_size<variant<
 
 // variant_alternative
 
-template<std::size_t I, class T> struct variant_alternative;
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I, class T> struct variant_alternative;
 
-template<std::size_t I, class T> using variant_alternative_t = typename variant_alternative<I, T>::type;
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I, class T> using variant_alternative_t = typename variant_alternative<I, T>::type;
 
 #if BOOST_WORKAROUND(BOOST_GCC, < 40900)
 
@@ -317,13 +333,13 @@ template<std::size_t I, class... T> struct variant_alternative<I, variant<T...>>
 
 // variant_npos
 
-constexpr std::size_t variant_npos = ~static_cast<std::size_t>( 0 );
+BOOST_VARIANT2_MODULE_EXPORT constexpr std::size_t variant_npos = ~static_cast<std::size_t>( 0 );
 
 // holds_alternative
 
 #if !defined(BOOST_MP11_HAS_CXX14_CONSTEXPR)
 
-template<class U, class... T> constexpr bool holds_alternative( variant<T...> const& v ) noexcept
+BOOST_VARIANT2_MODULE_EXPORT template<class U, class... T> constexpr bool holds_alternative( variant<T...> const& v ) noexcept
 {
     static_assert( mp11::mp_contains<variant<T...>, U>::value, "The type must be present in the list of variant alternatives" );
 
@@ -346,7 +362,7 @@ template<class U, class V> struct holds_alternative_L
 
 } // namespace detail
 
-template<class U, class... T> constexpr bool holds_alternative( variant<T...> const& v ) noexcept
+BOOST_VARIANT2_MODULE_EXPORT template<class U, class... T> constexpr bool holds_alternative( variant<T...> const& v ) noexcept
 {
     using V = variant<T...>;
     static_assert( mp11::mp_contains<V, U>::value, "The type must be present in the list of variant alternatives" );
@@ -358,13 +374,13 @@ template<class U, class... T> constexpr bool holds_alternative( variant<T...> co
 
 // get (index)
 
-template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>>& get(variant<T...>& v)
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>>& get(variant<T...>& v)
 {
     static_assert( I < sizeof...(T), "Index out of bounds" );
     return ( v.index() != I? detail::throw_bad_variant_access(): (void)0 ), v._get_impl( mp11::mp_size_t<I>() );
 }
 
-template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>>&& get(variant<T...>&& v)
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>>&& get(variant<T...>&& v)
 {
     static_assert( I < sizeof...(T), "Index out of bounds" );
 
@@ -380,13 +396,13 @@ template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T
 #endif
 }
 
-template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>> const& get(variant<T...> const& v)
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>> const& get(variant<T...> const& v)
 {
     static_assert( I < sizeof...(T), "Index out of bounds" );
     return ( v.index() != I? detail::throw_bad_variant_access(): (void)0 ), v._get_impl( mp11::mp_size_t<I>() );
 }
 
-template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>> const&& get(variant<T...> const&& v)
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>> const&& get(variant<T...> const&& v)
 {
     static_assert( I < sizeof...(T), "Index out of bounds" );
 
@@ -410,7 +426,7 @@ template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T
 # define BOOST_VARIANT2_CX14_ASSERT(expr)
 #endif
 
-template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>>& unsafe_get(variant<T...>& v)
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>>& unsafe_get(variant<T...>& v)
 {
     static_assert( I < sizeof...(T), "Index out of bounds" );
 
@@ -419,7 +435,7 @@ template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T
     return v._get_impl( mp11::mp_size_t<I>() );
 }
 
-template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>>&& unsafe_get(variant<T...>&& v)
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>>&& unsafe_get(variant<T...>&& v)
 {
     static_assert( I < sizeof...(T), "Index out of bounds" );
 
@@ -428,7 +444,7 @@ template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T
     return std::move( v._get_impl( mp11::mp_size_t<I>() ) );
 }
 
-template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>> const& unsafe_get(variant<T...> const& v)
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>> const& unsafe_get(variant<T...> const& v)
 {
     static_assert( I < sizeof...(T), "Index out of bounds" );
 
@@ -437,7 +453,7 @@ template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T
     return v._get_impl( mp11::mp_size_t<I>() );
 }
 
-template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>> const&& unsafe_get(variant<T...> const&& v)
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I, class... T> constexpr variant_alternative_t<I, variant<T...>> const&& unsafe_get(variant<T...> const&& v)
 {
     static_assert( I < sizeof...(T), "Index out of bounds" );
 
@@ -503,13 +519,13 @@ template<class U, class... T> constexpr U const* get_if_impl( variant<T...> cons
 
 } // namespace detail
 
-template<class U, class... T> constexpr U& get(variant<T...>& v)
+BOOST_VARIANT2_MODULE_EXPORT template<class U, class... T> constexpr U& get(variant<T...>& v)
 {
     static_assert( mp11::mp_contains<variant<T...>, U>::value, "The type must be present in the list of variant alternatives" );
     return ( !holds_alternative<U>( v )? detail::throw_bad_variant_access(): (void)0 ), *detail::get_if_impl<U>( v );
 }
 
-template<class U, class... T> constexpr U&& get(variant<T...>&& v)
+BOOST_VARIANT2_MODULE_EXPORT template<class U, class... T> constexpr U&& get(variant<T...>&& v)
 {
     static_assert( mp11::mp_contains<variant<T...>, U>::value, "The type must be present in the list of variant alternatives" );
 
@@ -525,13 +541,13 @@ template<class U, class... T> constexpr U&& get(variant<T...>&& v)
 #endif
 }
 
-template<class U, class... T> constexpr U const& get(variant<T...> const& v)
+BOOST_VARIANT2_MODULE_EXPORT template<class U, class... T> constexpr U const& get(variant<T...> const& v)
 {
     static_assert( mp11::mp_contains<variant<T...>, U>::value, "The type must be present in the list of variant alternatives" );
     return ( !holds_alternative<U>( v )? detail::throw_bad_variant_access(): (void)0 ), *detail::get_if_impl<U>( v );
 }
 
-template<class U, class... T> constexpr U const&& get(variant<T...> const&& v)
+BOOST_VARIANT2_MODULE_EXPORT template<class U, class... T> constexpr U const&& get(variant<T...> const&& v)
 {
     static_assert( mp11::mp_contains<variant<T...>, U>::value, "The type must be present in the list of variant alternatives" );
 
@@ -549,13 +565,13 @@ template<class U, class... T> constexpr U const&& get(variant<T...> const&& v)
 
 // get_if (index)
 
-template<std::size_t I, class... T> constexpr typename std::add_pointer<variant_alternative_t<I, variant<T...>>>::type get_if(variant<T...>* v) noexcept
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I, class... T> constexpr typename std::add_pointer<variant_alternative_t<I, variant<T...>>>::type get_if(variant<T...>* v) noexcept
 {
     static_assert( I < sizeof...(T), "Index out of bounds" );
     return v && v->index() == I? &v->_get_impl( mp11::mp_size_t<I>() ): 0;
 }
 
-template<std::size_t I, class... T> constexpr typename std::add_pointer<const variant_alternative_t<I, variant<T...>>>::type get_if(variant<T...> const * v) noexcept
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I, class... T> constexpr typename std::add_pointer<const variant_alternative_t<I, variant<T...>>>::type get_if(variant<T...> const * v) noexcept
 {
     static_assert( I < sizeof...(T), "Index out of bounds" );
     return v && v->index() == I? &v->_get_impl( mp11::mp_size_t<I>() ): 0;
@@ -563,13 +579,13 @@ template<std::size_t I, class... T> constexpr typename std::add_pointer<const va
 
 // get_if (type)
 
-template<class U, class... T> constexpr typename std::add_pointer<U>::type get_if(variant<T...>* v) noexcept
+BOOST_VARIANT2_MODULE_EXPORT template<class U, class... T> constexpr typename std::add_pointer<U>::type get_if(variant<T...>* v) noexcept
 {
     static_assert( mp11::mp_contains<variant<T...>, U>::value, "The type must be present in the list of variant alternatives" );
     return v && holds_alternative<U>( *v )? detail::get_if_impl<U>( *v ): 0;
 }
 
-template<class U, class... T> constexpr typename std::add_pointer<U const>::type get_if(variant<T...> const* v) noexcept
+BOOST_VARIANT2_MODULE_EXPORT template<class U, class... T> constexpr typename std::add_pointer<U const>::type get_if(variant<T...> const* v) noexcept
 {
     static_assert( mp11::mp_contains<variant<T...>, U>::value, "The type must be present in the list of variant alternatives" );
     return v && holds_alternative<U>( *v )? detail::get_if_impl<U>( *v ): 0;
@@ -1387,13 +1403,13 @@ template<class... T> struct variant_base_impl<false, false, T...>
 
 // in_place_type_t
 
-template<class T> struct in_place_type_t
+BOOST_VARIANT2_MODULE_EXPORT template<class T> struct in_place_type_t
 {
 };
 
 #if !defined(BOOST_NO_CXX14_VARIABLE_TEMPLATES)
 
-template<class T> constexpr in_place_type_t<T> in_place_type{};
+BOOST_VARIANT2_MODULE_EXPORT template<class T> constexpr in_place_type_t<T> in_place_type{};
 
 #endif
 
@@ -1407,13 +1423,13 @@ template<class T> struct is_in_place_type<in_place_type_t<T>>: std::true_type {}
 
 // in_place_index_t
 
-template<std::size_t I> struct in_place_index_t
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I> struct in_place_index_t
 {
 };
 
 #if !defined(BOOST_NO_CXX14_VARIABLE_TEMPLATES)
 
-template<std::size_t I> constexpr in_place_index_t<I> in_place_index{};
+BOOST_VARIANT2_MODULE_EXPORT template<std::size_t I> constexpr in_place_index_t<I> in_place_index{};
 
 #endif
 
@@ -1778,7 +1794,7 @@ public:
 
 // variant
 
-template<class... T> class variant: private detail::variant_ma_base<T...>
+BOOST_VARIANT2_MODULE_EXPORT template<class... T> class variant: private detail::variant_ma_base<T...>
 {
 private:
 
@@ -2116,7 +2132,7 @@ template<class... T> struct eq_L
 
 } // namespace detail
 
-template<class... T> constexpr bool operator==( variant<T...> const & v, variant<T...> const & w )
+BOOST_VARIANT2_MODULE_EXPORT template<class... T> constexpr bool operator==( variant<T...> const & v, variant<T...> const & w )
 {
     return v.index() == w.index() && mp11::mp_with_index<sizeof...(T)>( v.index(), detail::eq_L<T...>{ v, w } );
 }
@@ -2137,7 +2153,7 @@ template<class... T> struct ne_L
 
 } // namespace detail
 
-template<class... T> constexpr bool operator!=( variant<T...> const & v, variant<T...> const & w )
+BOOST_VARIANT2_MODULE_EXPORT template<class... T> constexpr bool operator!=( variant<T...> const & v, variant<T...> const & w )
 {
     return v.index() != w.index() || mp11::mp_with_index<sizeof...(T)>( v.index(), detail::ne_L<T...>{ v, w } );
 }
@@ -2158,12 +2174,12 @@ template<class... T> struct lt_L
 
 } // namespace detail
 
-template<class... T> constexpr bool operator<( variant<T...> const & v, variant<T...> const & w )
+BOOST_VARIANT2_MODULE_EXPORT template<class... T> constexpr bool operator<( variant<T...> const & v, variant<T...> const & w )
 {
     return v.index() < w.index() || ( v.index() == w.index() && mp11::mp_with_index<sizeof...(T)>( v.index(), detail::lt_L<T...>{ v, w } ) );
 }
 
-template<class... T> constexpr bool operator>(  variant<T...> const & v, variant<T...> const & w )
+BOOST_VARIANT2_MODULE_EXPORT template<class... T> constexpr bool operator>(  variant<T...> const & v, variant<T...> const & w )
 {
     return w < v;
 }
@@ -2184,12 +2200,12 @@ template<class... T> struct le_L
 
 } // namespace detail
 
-template<class... T> constexpr bool operator<=( variant<T...> const & v, variant<T...> const & w )
+BOOST_VARIANT2_MODULE_EXPORT template<class... T> constexpr bool operator<=( variant<T...> const & v, variant<T...> const & w )
 {
     return v.index() < w.index() || ( v.index() == w.index() && mp11::mp_with_index<sizeof...(T)>( v.index(), detail::le_L<T...>{ v, w } ) );
 }
 
-template<class... T> constexpr bool operator>=( variant<T...> const & v, variant<T...> const & w )
+BOOST_VARIANT2_MODULE_EXPORT template<class... T> constexpr bool operator>=( variant<T...> const & v, variant<T...> const & w )
 {
     return w <= v;
 }
@@ -2279,7 +2295,7 @@ template<class R, class F, class... V> using Vret = typename Vret_impl<R, F, V..
 
 } // namespace detail
 
-template<class R = detail::deduced, class F> constexpr auto visit( F&& f ) -> detail::Vret<R, F>
+BOOST_VARIANT2_MODULE_EXPORT template<class R = detail::deduced, class F> constexpr auto visit( F&& f ) -> detail::Vret<R, F>
 {
     return std::forward<F>(f)();
 }
@@ -2300,7 +2316,7 @@ template<class R, class F, class V1> struct visit_L1
 
 } // namespace detail
 
-template<class R = detail::deduced, class F, class V1> constexpr auto visit( F&& f, V1&& v1 ) -> detail::Vret<R, F, V1>
+BOOST_VARIANT2_MODULE_EXPORT template<class R = detail::deduced, class F, class V1> constexpr auto visit( F&& f, V1&& v1 ) -> detail::Vret<R, F, V1>
 {
     return mp11::mp_with_index<detail::variant_base_size<V1>>( v1.index(), detail::visit_L1<R, F, V1>{ std::forward<F>(f), std::forward<V1>(v1) } );
 }
@@ -2342,7 +2358,7 @@ template<class R, class F, class V1, class V2> struct visit_L2
 
 } // namespace detail
 
-template<class R = detail::deduced, class F, class V1, class V2> constexpr auto visit( F&& f, V1&& v1, V2&& v2 ) -> detail::Vret<R, F, V1, V2>
+BOOST_VARIANT2_MODULE_EXPORT template<class R = detail::deduced, class F, class V1, class V2> constexpr auto visit( F&& f, V1&& v1, V2&& v2 ) -> detail::Vret<R, F, V1, V2>
 {
     return mp11::mp_with_index<detail::variant_base_size<V1>>( v1.index(), detail::visit_L2<R, F, V1, V2>{ std::forward<F>(f), std::forward<V1>(v1), std::forward<V2>(v2) } );
 }
@@ -2367,7 +2383,7 @@ template<class R, class F, class V1, class V2, class V3> struct visit_L3
 
 } // namespace detail
 
-template<class R = detail::deduced, class F, class V1, class V2, class V3> constexpr auto visit( F&& f, V1&& v1, V2&& v2, V3&& v3 ) -> detail::Vret<R, F, V1, V2, V3>
+BOOST_VARIANT2_MODULE_EXPORT template<class R = detail::deduced, class F, class V1, class V2, class V3> constexpr auto visit( F&& f, V1&& v1, V2&& v2, V3&& v3 ) -> detail::Vret<R, F, V1, V2, V3>
 {
     return mp11::mp_with_index<detail::variant_base_size<V1>>( v1.index(), detail::visit_L3<R, F, V1, V2, V3>{ std::forward<F>(f), std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3) } );
 }
@@ -2393,14 +2409,14 @@ template<class R, class F, class V1, class V2, class V3, class V4> struct visit_
 
 } // namespace detail
 
-template<class R = detail::deduced, class F, class V1, class V2, class V3, class V4> constexpr auto visit( F&& f, V1&& v1, V2&& v2, V3&& v3, V4&& v4 ) -> detail::Vret<R, F, V1, V2, V3, V4>
+BOOST_VARIANT2_MODULE_EXPORT template<class R = detail::deduced, class F, class V1, class V2, class V3, class V4> constexpr auto visit( F&& f, V1&& v1, V2&& v2, V3&& v3, V4&& v4 ) -> detail::Vret<R, F, V1, V2, V3, V4>
 {
     return mp11::mp_with_index<detail::variant_base_size<V1>>( v1.index(), detail::visit_L4<R, F, V1, V2, V3, V4>{ std::forward<F>(f), std::forward<V1>(v1), std::forward<V2>(v2), std::forward<V3>(v3), std::forward<V4>(v4) } );
 }
 
 #else
 
-template<class R = detail::deduced, class F, class V1, class V2, class... V> constexpr auto visit( F&& f, V1&& v1, V2&& v2, V&&... v ) -> detail::Vret<R, F, V1, V2, V...>
+BOOST_VARIANT2_MODULE_EXPORT template<class R = detail::deduced, class F, class V1, class V2, class... V> constexpr auto visit( F&& f, V1&& v1, V2&& v2, V&&... v ) -> detail::Vret<R, F, V1, V2, V...>
 {
     return mp11::mp_with_index<detail::variant_base_size<V1>>( v1.index(), [&]( auto I ){
 
@@ -2413,7 +2429,7 @@ template<class R = detail::deduced, class F, class V1, class V2, class... V> con
 #endif
 
 // specialized algorithms
-template<class... T,
+BOOST_VARIANT2_MODULE_EXPORT template<class... T,
     class E = typename std::enable_if<mp11::mp_all<std::is_move_constructible<T>..., detail::is_swappable<T>...>::value>::type>
 BOOST_CXX14_CONSTEXPR void swap( variant<T...> & v, variant<T...> & w )
     noexcept( noexcept(v.swap(w)) )
@@ -2441,7 +2457,7 @@ template<class R, class V, class... F> struct visit_by_index_L
 
 } // namespace detail
 
-template<class R = detail::deduced, class V, class... F> constexpr auto visit_by_index( V&& v, F&&... f ) -> detail::Vret2<R, V, F...>
+BOOST_VARIANT2_MODULE_EXPORT template<class R = detail::deduced, class V, class... F> constexpr auto visit_by_index( V&& v, F&&... f ) -> detail::Vret2<R, V, F...>
 {
     static_assert( variant_size<V>::value == sizeof...(F), "Incorrect number of function objects" );
 
@@ -2475,14 +2491,14 @@ template<class Os, class T> struct is_output_streamable<Os, T, decltype( std::de
 
 } // namespace detail
 
-template<class Ch, class Tr>
+BOOST_VARIANT2_MODULE_EXPORT template<class Ch, class Tr>
 std::basic_ostream<Ch, Tr>& operator<<( std::basic_ostream<Ch, Tr>& os, monostate const& )
 {
     os << "monostate";
     return os;
 }
 
-template<class Ch, class Tr, class T1, class... T,
+BOOST_VARIANT2_MODULE_EXPORT template<class Ch, class Tr, class T1, class... T,
     class E = typename std::enable_if< mp11::mp_all< detail::is_output_streamable<std::basic_ostream<Ch, Tr>, T>... >::value >::type >
 std::basic_ostream<Ch, Tr>& operator<<( std::basic_ostream<Ch, Tr>& os, variant<T1, T...> const& v )
 {
@@ -2550,12 +2566,12 @@ template<class... T> std::size_t hash_value_std( variant<T...> const & v )
 
 } // namespace detail
 
-inline std::size_t hash_value( monostate const & )
+BOOST_VARIANT2_MODULE_EXPORT inline std::size_t hash_value( monostate const & )
 {
     return 0xA7EE4757u;
 }
 
-template<class... T> std::size_t hash_value( variant<T...> const & v )
+BOOST_VARIANT2_MODULE_EXPORT template<class... T> std::size_t hash_value( variant<T...> const & v )
 {
     return mp11::mp_with_index<sizeof...(T)>( v.index(), detail::hash_value_L< boost::hash, variant<T...> >{ v } );
 }
@@ -2603,6 +2619,9 @@ template<> struct hash< ::boost::variant2::monostate >
 };
 
 } // namespace std
+
+// RP TODO: this is going to cause trouble, revisit
+#ifndef BOOST_USE_MODULES
 
 // JSON support
 
@@ -2707,10 +2726,14 @@ template<class... T>
 } // namespace variant2
 } // namespace boost
 
+#endif // !BOOST_USE_MODULES (JSON support)
+
 #undef BOOST_VARIANT2_CX14_ASSERT
 
 #if defined(_MSC_VER) && _MSC_VER < 1910
 # pragma warning( pop )
 #endif
+
+#endif // BOOST_USE_MODULES compatibility guard
 
 #endif // #ifndef BOOST_VARIANT2_VARIANT_HPP_INCLUDED

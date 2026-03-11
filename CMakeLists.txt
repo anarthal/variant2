@@ -7,13 +7,27 @@ cmake_minimum_required(VERSION 3.8...3.20)
 
 project(boost_variant2 VERSION "${BOOST_SUPERPROJECT_VERSION}" LANGUAGES CXX)
 
-add_library(boost_variant2 INTERFACE)
+if (BOOST_USE_MODULES)
+  add_library(boost_variant2 STATIC)
+  target_sources(boost_variant2 PUBLIC FILE_SET CXX_MODULES BASE_DIRS modules FILES modules/boost_variant2.cppm)
+  set(__scope PUBLIC)
+
+  target_compile_features(boost_variant2 PUBLIC cxx_std_23)
+  set_target_properties(boost_variant2 PROPERTIES CXX_MODULE_STD 1)
+  target_compile_definitions(boost_variant2 PUBLIC BOOST_USE_MODULES)
+
+else()
+  add_library(boost_variant2 INTERFACE)
+  target_compile_features(boost_variant2 INTERFACE cxx_std_11)
+  set(__scope INTERFACE)
+endif()
+
 add_library(Boost::variant2 ALIAS boost_variant2)
 
-target_include_directories(boost_variant2 INTERFACE include)
+target_include_directories(boost_variant2 ${__scope} include)
 
 target_link_libraries(boost_variant2
-  INTERFACE
+  ${__scope}
     Boost::assert
     Boost::config
     Boost::mp11
@@ -27,8 +41,6 @@ if(NOT CMAKE_VERSION VERSION_LESS 3.19 AND CMAKE_GENERATOR MATCHES "Visual Studi
   target_sources(boost_variant2 PRIVATE ${boost_variant2_IDEFILES})
 
 endif()
-
-target_compile_features(boost_variant2 INTERFACE cxx_std_11)
 
 if(BUILD_TESTING AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/CMakeLists.txt")
 

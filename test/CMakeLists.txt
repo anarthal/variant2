@@ -6,6 +6,10 @@ include(BoostTestJamfile OPTIONAL RESULT_VARIABLE HAVE_BOOST_TEST)
 
 if(HAVE_BOOST_TEST)
 
+if(BOOST_USE_MODULES)
+  set(CMAKE_CXX_MODULE_STD ON)
+endif()
+
 boost_test_jamfile(FILE Jamfile LINK_LIBRARIES Boost::variant2 Boost::core Boost::container_hash Boost::system)
 
 endif()
